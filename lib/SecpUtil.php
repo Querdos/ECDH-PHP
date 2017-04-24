@@ -154,6 +154,11 @@ class SecpUtil
         );
     }
 
+    /**
+     * Recommended Parameters secp521r1 (521-bit)
+     *
+     * @return \GMP[]
+     */
     public static function secp521r1()
     {
         return array(
