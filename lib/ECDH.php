@@ -60,12 +60,14 @@ class ECDH
         );
     }
 
+    /**
+     * The shared secret is xk (the x coordinate of the point)
+     *
+     * @param $public_external
+     */
     public function computeSecret($public_external)
     {
-        $this->secret = array(
-            gmp_mul($this->private, $public_external[0]),
-            gmp_mul($this->private, $public_external[1])
-        );
+        $this->secret = gmp_mul($this->private, $public_external[0]);
     }
 
     /**
