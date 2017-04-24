@@ -2,8 +2,6 @@
 
 namespace Querdos\Lib;
 
-use Querdos\Lib\SecpUtil;
-
 /**
  * Class ECDH
  * @package Querdos\Lib
