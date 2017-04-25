@@ -54,12 +54,13 @@ class SecpUtil
             ],
 
             gmp_init('FFFFFFFFFFFFFFFFFFFFFFFF99DEF836146BC9B1B4D22831', 16),
-            gmp_init('01')
+            gmp_init(1)
         );
     }
 
     /**
      * Recommended Parameters secp224k1 (224-bit)
+     * TODO: Fix signature verification problem
      *
      * @return DomainParameters
      */
@@ -76,7 +77,7 @@ class SecpUtil
             ],
 
             gmp_init('0000000000000000000000000001DCE8D2EC6184CAF0A971769FB1F7', 16),
-            gmp_init('01')
+            gmp_init(1)
         );
     }
 
@@ -98,7 +99,7 @@ class SecpUtil
             ],
 
             gmp_init('FFFFFFFFFFFFFFFFFFFFFFFFFFFF16A2E0B8F03E13DD29455C5C2A3D', 16),
-            gmp_init('01')
+            gmp_init(1)
         );
     }
 
@@ -122,7 +123,7 @@ class SecpUtil
             ],
 
             gmp_init('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141', 16),
-            gmp_init('01')
+            gmp_init(1)
         );
     }
 
@@ -144,7 +145,7 @@ class SecpUtil
             ],
 
             gmp_init('FFFFFFFF00000000FFFFFFFFFFFFFFFFBCE6FAADA7179E84F3B9CAC2FC632551', 16),
-            gmp_init('01')
+            gmp_init(1)
         );
     }
 
@@ -166,12 +167,13 @@ class SecpUtil
             ],
 
             gmp_init('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC7634D81F4372DDF581A0DB248B0A77AECEC196ACCC52973', 16),
-            gmp_init('01')
+            gmp_init(1)
         );
     }
 
     /**
      * Recommended Parameters secp521r1 (521-bit)
+     * TODO: Fix signature verification problem
      *
      * @return DomainParameters
      */
@@ -188,7 +190,7 @@ class SecpUtil
             ],
 
             gmp_init('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA51868783BF2F966B7FCC0148F709A5D03BB5C9B8899C47AEBB6FB71E91386409', 16),
-            gmp_init('01')
+            gmp_init(1)
         );
     }
 
