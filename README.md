@@ -1,4 +1,10 @@
 # ECDH-PHP
+[![Build Status](https://travis-ci.org/Querdos/ECDH-PHP.svg?branch=master)](https://travis-ci.org/Querdos/ECDH-PHP) 
+[![Latest Stable Version](https://poser.pugx.org/querdos/php-ecdh/v/stable)](https://packagist.org/packages/querdos/php-ecdh) 
+[![Total Downloads](https://poser.pugx.org/querdos/php-ecdh/downloads)](https://packagist.org/packages/querdos/php-ecdh) 
+[![Latest Unstable Version](https://poser.pugx.org/querdos/php-ecdh/v/unstable)](https://packagist.org/packages/querdos/php-ecdh) 
+[![License](https://poser.pugx.org/querdos/php-ecdh/license)](https://packagist.org/packages/querdos/php-ecdh)  
+
 An Elliptic Curve Diffie Hellman Implementation in PHP.  
 
 Domain parameters used are from the [Recommended Elliptic Curve Domain Parameters](http://www.secg.org/sec2-v2.pdf)
@@ -15,6 +21,11 @@ Here are available standard for the ECDH protocol:
     ECDH::SECP384R1 // Recommended Parameters SECP384R1 (384-bit)
     ECDH::SECP521R1 // Recommended Parameters SECP521R1 (521-bit)
 ```
+
+# Problems to Fix
+Yet, there are some problems with the signature verification with the following recommended parameters:
+  * `secp224k1`
+  * `secp251r1`
 
 # Example
 ```php
