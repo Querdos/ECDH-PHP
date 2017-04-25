@@ -3,13 +3,14 @@ namespace Querdos\tests;
 
 require 'autoloader.php';
 use Querdos\Lib\ECDH;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class ECDHTest
  * @package ${NAMESPACE}
  * @author  Hamza ESSAYEGH <hamza.essayegh@protonmail.com>
  */
-class ECDHTest extends \PHPUnit_Framework_TestCase
+class ECDHTest extends TestCase
 {
     const MESSAGE = <<<EOT
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent lacinia, turpis a euismod posuere, metus dolor hendrerit lorem, in sagittis lorem nulla at tortor. Integer tellus risus, cursus at purus in, semper condimentum purus. Integer et lectus vel sapien tempor elementum. Integer non orci sed felis aliquam placerat. Aenean maximus elementum tristique. Donec euismod hendrerit mauris quis fringilla. Mauris eu purus suscipit, interdum justo non, volutpat mi. Integer eu facilisis lacus.
