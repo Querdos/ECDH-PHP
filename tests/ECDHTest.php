@@ -2,7 +2,9 @@
 namespace Querdos\tests;
 
 require 'autoloader.php';
-use Querdos\Lib\ECDH;
+use Querdos\lib\ECDHCurve25519;
+use Querdos\lib\ECDHCurve448;
+use Querdos\Lib\ECDHSecp;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -24,10 +26,40 @@ Phasellus quam neque, dictum eu leo quis, sagittis mattis enim. Praesent in vest
 Maecenas pellentesque rutrum auctor. Nunc quis fermentum nulla. Sed eu mi sapien. Nunc sed scelerisque nunc. Integer elementum lacinia orci quis vehicula. Quisque volutpat tristique massa, ut malesuada arcu pellentesque eu. Donec gravida tristique massa vel lacinia. Etiam eget est mollis, viverra massa et, vehicula lectus.
 EOT;
 
+    public function testCurve25519()
+    {
+        $ecdh_alice = new ECDHCurve25519();
+        $ecdh_bob   = new ECDHCurve25519();
+
+        $ecdh_bob->computeSecret($ecdh_alice->getPublic());
+        $ecdh_alice->computeSecret($ecdh_bob->getPublic());
+
+        $sign   = $ecdh_bob->signMessage(self::MESSAGE);
+        $signOk = $ecdh_alice->verifySignature($sign, $ecdh_bob->getPublic(), self::MESSAGE);
+
+        $this->assertEquals(0, gmp_cmp($ecdh_alice->getSecret(), $ecdh_bob->getSecret()));
+        $this->assertTrue($signOk, "Signature verification failed");
+    }
+
+    public function testCurve448()
+    {
+        $ecdh_alice = new ECDHCurve448();
+        $ecdh_bob   = new ECDHCurve448();
+
+        $ecdh_bob->computeSecret($ecdh_alice->getPublic());
+        $ecdh_alice->computeSecret($ecdh_bob->getPublic());
+
+        $sign   = $ecdh_bob->signMessage(self::MESSAGE);
+        $signOk = $ecdh_alice->verifySignature($sign, $ecdh_bob->getPublic(), self::MESSAGE);
+
+        $this->assertEquals(0, gmp_cmp($ecdh_alice->getSecret(), $ecdh_bob->getSecret()));
+        $this->assertTrue($signOk, "Signature verification failed");
+    }
+
     public function testSECP192K1()
     {
-        $ecdh_alice = new ECDH(ECDH::SECP192K1);
-        $ecdh_bob   = new ECDH(ECDH::SECP192K1);
+        $ecdh_alice = new ECDHSecp(ECDHSecp::SECP192K1);
+        $ecdh_bob   = new ECDHSecp(ECDHSecp::SECP192K1);
 
         $ecdh_bob->computeSecret($ecdh_alice->getPublic());
         $ecdh_alice->computeSecret($ecdh_bob->getPublic());
@@ -41,8 +73,8 @@ EOT;
 
     public function testSECP192R1()
     {
-        $ecdh_alice = new ECDH(ECDH::SECP192R1);
-        $ecdh_bob   = new ECDH(ECDH::SECP192R1);
+        $ecdh_alice = new ECDHSecp(ECDHSecp::SECP192R1);
+        $ecdh_bob   = new ECDHSecp(ECDHSecp::SECP192R1);
 
         $ecdh_bob->computeSecret($ecdh_alice->getPublic());
         $ecdh_alice->computeSecret($ecdh_bob->getPublic());
@@ -57,8 +89,8 @@ EOT;
 
     public function testSECP224K1()
     {
-        $ecdh_alice = new ECDH(ECDH::SECP224K1);
-        $ecdh_bob   = new ECDH(ECDH::SECP224K1);
+        $ecdh_alice = new ECDHSecp(ECDHSecp::SECP224K1);
+        $ecdh_bob   = new ECDHSecp(ECDHSecp::SECP224K1);
 
         $ecdh_bob->computeSecret($ecdh_alice->getPublic());
         $ecdh_alice->computeSecret($ecdh_bob->getPublic());
@@ -74,8 +106,8 @@ EOT;
 
     public function testSECP224R1()
     {
-        $ecdh_alice = new ECDH(ECDH::SECP224R1);
-        $ecdh_bob   = new ECDH(ECDH::SECP224R1);
+        $ecdh_alice = new ECDHSecp(ECDHSecp::SECP224R1);
+        $ecdh_bob   = new ECDHSecp(ECDHSecp::SECP224R1);
 
         $ecdh_bob->computeSecret($ecdh_alice->getPublic());
         $ecdh_alice->computeSecret($ecdh_bob->getPublic());
@@ -90,8 +122,8 @@ EOT;
 
     public function testSECP256K1()
     {
-        $ecdh_alice = new ECDH(ECDH::SECP256K1);
-        $ecdh_bob   = new ECDH(ECDH::SECP256K1);
+        $ecdh_alice = new ECDHSecp(ECDHSecp::SECP256K1);
+        $ecdh_bob   = new ECDHSecp(ECDHSecp::SECP256K1);
 
         $ecdh_bob->computeSecret($ecdh_alice->getPublic());
         $ecdh_alice->computeSecret($ecdh_bob->getPublic());
@@ -106,8 +138,8 @@ EOT;
 
     public function testSECP256R1()
     {
-        $ecdh_alice = new ECDH(ECDH::SECP256R1);
-        $ecdh_bob   = new ECDH(ECDH::SECP256R1);
+        $ecdh_alice = new ECDHSecp(ECDHSecp::SECP256R1);
+        $ecdh_bob   = new ECDHSecp(ECDHSecp::SECP256R1);
 
         $ecdh_bob->computeSecret($ecdh_alice->getPublic());
         $ecdh_alice->computeSecret($ecdh_bob->getPublic());
@@ -122,8 +154,8 @@ EOT;
 
     public function testSECP384R1()
     {
-        $ecdh_alice = new ECDH(ECDH::SECP384R1);
-        $ecdh_bob   = new ECDH(ECDH::SECP384R1);
+        $ecdh_alice = new ECDHSecp(ECDHSecp::SECP384R1);
+        $ecdh_bob   = new ECDHSecp(ECDHSecp::SECP384R1);
 
         $ecdh_bob->computeSecret($ecdh_alice->getPublic());
         $ecdh_alice->computeSecret($ecdh_bob->getPublic());
@@ -138,8 +170,8 @@ EOT;
 
     public function testSECP521R1()
     {
-        $ecdh_alice = new ECDH(ECDH::SECP521R1);
-        $ecdh_bob   = new ECDH(ECDH::SECP521R1);
+        $ecdh_alice = new ECDHSecp(ECDHSecp::SECP521R1);
+        $ecdh_bob   = new ECDHSecp(ECDHSecp::SECP521R1);
 
         $ecdh_bob->computeSecret($ecdh_alice->getPublic());
         $ecdh_alice->computeSecret($ecdh_bob->getPublic());

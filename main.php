@@ -1,21 +1,12 @@
 <?php
 require "autoloader.php";
-use Querdos\Lib\ECDH;
 
-// creating key pair for alice and bob
-$ecdh_alice = new ECDH(ECDH::SECP256K1);
-$ecdh_bob   = new ECDH(ECDH::SECP256K1);
+use Querdos\lib\ECDHCurve25519;
+use Querdos\lib\ECDHCurve448;
+use Querdos\Lib\ECDHSecp;
 
-// computing secret
-$ecdh_alice->computeSecret($ecdh_bob->getPublic());
-$ecdh_bob->computeSecret($ecdh_alice->getPublic());
-
-// checking that they share the same secret
-if (0 == gmp_cmp($ecdh_bob->getSecret(), $ecdh_alice->getSecret())) {
-    echo "Alice and Bob share the same secret" . PHP_EOL;
-} else {
-    echo "Alice and bob don't share the same secret" . PHP_EOL;
-    die;
+function compare_secret($v1, $v2) {
+    return 0 == gmp_cmp($v1->getSecret(), $v2->getSecret());
 }
 
 // Alice want to send bob a message
@@ -31,13 +22,103 @@ Nulla rutrum elementum pretium. Aenean sollicitudin neque dolor, eget pretium tu
 Proin aliquet in justo ac sodales. Aenean at diam ultrices, gravida libero in, tempus est. Donec sed sagittis diam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla mollis tincidunt purus ullamcorper pharetra. Suspendisse sollicitudin, nibh ac feugiat rutrum, purus arcu imperdiet dolor, ornare tristique massa urna sit amet nunc. Donec congue rutrum maximus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi finibus sollicitudin elit, eu tincidunt quam viverra vel. Maecenas dictum nisl ut luctus molestie. Curabitur rutrum lacus urna, at luctus nulla mattis et.
 EOT;
 
-$sign    = $ecdh_alice->signMessage($message);
-$sigOK   = $ecdh_bob->verifySignature($sign, $ecdh_alice->getPublic(), $message);
+// creating key pair with curve25519
+$ecdhCurve25519_A = new ECDHCurve25519();
+$ecdhCurve25519_B = new ECDHCurve25519();
 
-if ($sigOK) {
-    echo "Signature match." . PHP_EOL;
-} else {
-    echo "Invalid signature." . PHP_EOL;
-}
+// creating key pair with curve448
+$ecdhCurve448_A = new ECDHCurve448();
+$ecdhCurve448_B = new ECDHCurve448();
+
+// creating key pair with SECP192K1
+$ecdhSECP192K1_A = new ECDHSecp();
+$ecdhSECP192K1_B = new ECDHSecp();
+
+// creating key pair with SECP192R1
+$ecdhSECP192R1_A = new ECDHSecp(ECDHSecp::SECP192R1);
+$ecdhSECP192R1_B = new ECDHSecp(ECDHSecp::SECP192R1);
+
+// creating key pair with SECP224R1
+$ecdhSECP224R1_A = new ECDHSecp(ECDHSecp::SECP224R1);
+$ecdhSECP224R1_B = new ECDHSecp(ECDHSecp::SECP224R1);
+
+// creating key pair with SECP256K1
+$ecdhSECP256K1_A = new ECDHSecp(ECDHSecp::SECP256K1);
+$ecdhSECP256K1_B = new ECDHSecp(ECDHSecp::SECP256K1);
+
+// creating key pair with SECP256R1
+$ecdhSECP256R1_A = new ECDHSecp(ECDHSecp::SECP256R1);
+$ecdhSECP256R1_B = new ECDHSecp(ECDHSecp::SECP256R1);
+
+// creating key pair with SECP384R1
+$ecdhSECP384R1_A = new ECDHSecp(ECDHSecp::SECP384R1);
+$ecdhSECP384R1_B = new ECDHSecp(ECDHSecp::SECP384R1);
+
+// computing secrets
+$ecdhCurve448_A->computeSecret($ecdhCurve448_B->getPublic());
+$ecdhCurve448_B->computeSecret($ecdhCurve448_A->getPublic());
+
+$ecdhCurve25519_A->computeSecret($ecdhCurve25519_B->getPublic());
+$ecdhCurve25519_B->computeSecret($ecdhCurve25519_A->getPublic());
+
+$ecdhSECP192K1_A->computeSecret($ecdhSECP192K1_B->getPublic());
+$ecdhSECP192K1_B->computeSecret($ecdhSECP192K1_A->getPublic());
+
+$ecdhSECP192R1_A->computeSecret($ecdhSECP192R1_B->getPublic());
+$ecdhSECP192R1_B->computeSecret($ecdhSECP192R1_A->getPublic());
+
+$ecdhSECP224R1_A->computeSecret($ecdhSECP224R1_B->getPublic());
+$ecdhSECP224R1_B->computeSecret($ecdhSECP224R1_A->getPublic());
+
+$ecdhSECP256K1_A->computeSecret($ecdhSECP256K1_B->getPublic());
+$ecdhSECP256K1_B->computeSecret($ecdhSECP256K1_A->getPublic());
+
+$ecdhSECP256R1_A->computeSecret($ecdhSECP256R1_B->getPublic());
+$ecdhSECP256R1_B->computeSecret($ecdhSECP256R1_A->getPublic());
+
+$ecdhSECP384R1_A->computeSecret($ecdhSECP384R1_B->getPublic());
+$ecdhSECP384R1_B->computeSecret($ecdhSECP384R1_A->getPublic());
+
+echo "SECP 192 K1 Secrets validation: ";
+compare_secret($ecdhSECP192K1_A, $ecdhSECP192K1_B) ? $valid = "OK" : $valid = "NOK";
+echo $valid . PHP_EOL;
+echo "SECP 192 K1 Signing: ";
+$sign   = $ecdhSECP192K1_A->signMessage($message);
+$signOk = $ecdhSECP192K1_B->verifySignature($sign, $ecdhSECP192K1_A->getPublic(), $message);
+$signOk ? $valid = "OK" : $valid = "NOK";
+echo $valid . PHP_EOL . PHP_EOL;
+
+echo "SECP 192 R1 Secrets validation: ";
+compare_secret($ecdhSECP192R1_A, $ecdhSECP192R1_B) ? $valid = "OK" : $valid = "NOK";
+echo $valid . PHP_EOL;
+echo "SECP 192 R1 Signing: ";
+$sign   = $ecdhSECP192R1_A->signMessage($message);
+$signOk = $ecdhSECP192R1_B->verifySignature($sign, $ecdhSECP192R1_A->getPublic(), $message);
+$signOk ? $valid = "OK" : $valid = "NOK";
+echo $valid . PHP_EOL . PHP_EOL;
+
+echo "SECP 224 R1 Secrets validation: ";
+compare_secret($ecdhSECP224R1_A, $ecdhSECP224R1_B) ? $valid = "OK" : $valid = "NOK";
+echo $valid . PHP_EOL;
+
+echo "SECP 256 K1 Secrets validation: ";
+compare_secret($ecdhSECP256K1_A, $ecdhSECP256K1_B) ? $valid = "OK" : $valid = "NOK";
+echo $valid . PHP_EOL;
+
+echo "SECP 256 R1 Secrets validation: ";
+compare_secret($ecdhSECP256R1_A, $ecdhSECP256R1_B) ? $valid = "OK" : $valid = "NOK";
+echo $valid . PHP_EOL;
+
+echo "SECP 384 R1 Secrets validation: ";
+compare_secret($ecdhSECP384R1_A, $ecdhSECP384R1_B) ? $valid = "OK" : $valid = "NOK";
+echo $valid . PHP_EOL;
+
+echo "\nCurve25519 Secrets validation: ";
+compare_secret($ecdhCurve25519_A, $ecdhCurve25519_B) ? $valid = "OK" : $valid = "NOK";
+echo $valid . PHP_EOL;
+
+echo "Curve448   Secrets validation: ";
+compare_secret($ecdhCurve448_A, $ecdhCurve448_B) ? $valid = "OK" : $valid = "NOK";
+echo $valid . PHP_EOL;
 
 
