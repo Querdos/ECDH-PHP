@@ -49,7 +49,7 @@ class DomainParameters
      * @param \GMP   $n
      * @param \GMP   $h
      */
-    public function __construct(\GMP $p, \GMP $a, \GMP $b, array $g, \GMP $n, \GMP $h)
+    public function __construct(\GMP $p = null, \GMP $a = null, \GMP $b = null, array $g = null, \GMP $n = null, \GMP $h = null)
     {
         $this->p = $p;
         $this->a = $a;
