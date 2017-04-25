@@ -16,8 +16,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Querdos\\lib": "lib",
-      "Querdos\\Util": "Util"
+      "Querdos\\lib\\": "lib",
+      "Querdos\\Util\\": "Util"
     }
   }
 }
