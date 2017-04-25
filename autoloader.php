@@ -2,8 +2,10 @@
 
 function __autoload($class)
 {
-    $parts = explode('\\', $class);
+    require_once 'lib/DomainParameters.php';
+    require_once 'lib/ECDH.php';
+    require_once 'lib/ECDHSignature.php';
 
-    // requiring util classes
-    require 'lib/' . end($parts) . '.php';
+    require_once 'Util/MathUtil.php';
+    require_once 'Util/SecpUtil.php';
 }

@@ -1,0 +1,23 @@
+{
+  "name": "querdos/php-ecdh",
+  "description": "An Elliptic Curve Diffie Hellman implementation in PHP",
+  "type": "library",
+  "require-dev": {
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Hamza ESSAYEGH",
+      "email": "hamza.essayegh@protonmail.com"
+    }
+  ],
+  "require": {
+    "php": ">= 5.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "Querdos\\lib\\": "lib",
+      "Querdos\\Util\\": "Util"
+    }
+  }
+}
