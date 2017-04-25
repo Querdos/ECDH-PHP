@@ -1,6 +1,8 @@
 <?php
 
 namespace Querdos\Lib;
+use Querdos\Util\MathUtil;
+use Querdos\Util\SecpUtil;
 
 /**
  * Class ECDH

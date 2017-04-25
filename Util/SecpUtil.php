@@ -1,6 +1,8 @@
 <?php
 
-namespace Querdos\Lib;
+namespace Querdos\Util;
+
+use Querdos\lib\DomainParameters;
 
 /**
  * Eliptic Curve Domain Paramaters over Fp

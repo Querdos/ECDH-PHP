@@ -2,7 +2,6 @@
 
 namespace Querdos\lib;
 
-
 /**
  * Class DomainParameters
  * @package Querdos\lib

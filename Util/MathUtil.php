@@ -1,6 +1,6 @@
 <?php
 
-namespace Querdos\Lib;
+namespace Querdos\Util;
 
 /**
  * Class MathUtil
